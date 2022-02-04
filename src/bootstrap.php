@@ -48,7 +48,20 @@ try {
      */
     \Dotenv\Dotenv::create($DotenvRepository, APP_ROOT_DIR)->load();
 
-    
+    /**
+     * It makes an instance of the core and returns it.
+     * 
+     * @return \App\Core 
+     */
+    function Core(): \App\Core
+    {
+        return \App\Core::getInstance();
+    }
+
+    /** 
+     * Run app.
+     */
+    Core()->run();
 } catch (\Exception $e) {
     echo $e->getMessage();
 }

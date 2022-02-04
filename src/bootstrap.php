@@ -33,6 +33,22 @@ try {
      * Invite Composer autoloader.
      */
     require_once APP_VENDOR_DIR . DIRECTORY_SEPARATOR . 'autoload.php';
+
+    /** 
+     * Loading environment variables into the global sphere.
+     */
+    $DotenvRepository = \Dotenv\Repository\RepositoryBuilder::createWithNoAdapters()
+        ->addAdapter(\Dotenv\Repository\Adapter\EnvConstAdapter::class)
+        ->addWriter(\Dotenv\Repository\Adapter\PutenvAdapter::class)
+        ->immutable()
+        ->make();
+
+    /** 
+     * Set env to project.
+     */
+    \Dotenv\Dotenv::create($DotenvRepository, APP_ROOT_DIR)->load();
+
+    
 } catch (\Exception $e) {
     echo $e->getMessage();
 }

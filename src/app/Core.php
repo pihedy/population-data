@@ -2,6 +2,8 @@
 
 namespace App;
 
+use \App\Interface\Provider;
+
 /** 
  * The App class from which everything starts.
  * 
@@ -9,6 +11,13 @@ namespace App;
  */
 final class Core
 {
+    /**
+     * A collection container for data.
+     * 
+     * @var array
+     */
+    protected $container = [];
+
     /**
      * A copy of the basis of the theme.
      * 
@@ -33,6 +42,22 @@ final class Core
     }
 
     /**
+     * Points to the container by default.
+     * 
+     * @param string $key 
+     * 
+     * @return mixed 
+     */
+    public function __get(string $key)
+    {
+        if (!array_key_exists($key, $this->container)) {
+            return null;
+        }
+
+        return $this->container[$key];
+    }
+
+    /**
      * Make a copy if you don't already have one.
      * 
      * @return self 
@@ -44,6 +69,22 @@ final class Core
         }
 
         return self::$instance;
+    }
+
+    public function register(string $provider): void
+    {
+        $Object = new $provider;
+
+        if (!$Object instanceof Provider) {
+            throw new \Exception(
+                sprintf(
+                    'The class (%s) you want to register is not of Provider type!', 
+                    $provider
+                )
+            );
+        }
+
+        $this->container[$Object->getKey()] = $Object->boot();
     }
 
     /**

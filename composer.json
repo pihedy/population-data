@@ -12,6 +12,7 @@
     },
     "require": {
         "php": ">=7.3.0",
-        "vlucas/phpdotenv": "^5"
+        "vlucas/phpdotenv": "^5",
+        "nette/database": "^3.1"
     }
 }

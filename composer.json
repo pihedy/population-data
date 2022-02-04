@@ -11,6 +11,7 @@
         "vendor-dir": "src/app/Vendor"
     },
     "require": {
-        "php": ">=7.3.0"
+        "php": ">=7.3.0",
+        "vlucas/phpdotenv": "^5"
     }
 }

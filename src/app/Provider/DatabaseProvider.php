@@ -2,7 +2,6 @@
 
 namespace App\Provider;
 
-use \App\Interface\Provider;
 use \Nette\Caching\Storages\FileStorage;
 use \Nette\Database\Connection;
 use \Nette\Database\Structure;
@@ -14,7 +13,7 @@ use \Nette\Database\Explorer;
  * 
  * @author Pihe Edmond <pihedy@gmail.com>
  */
-class DatabaseProvider implements Provider
+class DatabaseProvider
 {
     /**
      * Provider key.

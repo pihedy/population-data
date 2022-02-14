@@ -4,22 +4,50 @@ namespace App\Structure;
 
 use \Nette\Database\Table\ActiveRow;
 
+/** 
+ * The structure of countries that makes it easier to reach countries.
+ * 
+ * @author Pihe Edmond <pihedy@gmail.com>
+ */
 class Country
 {
+    /**
+     * @var \Nette\Database\Table\ActiveRow
+     */
     protected $Country;
 
+    /**
+     * Part of the return value cache.
+     * 
+     * @var array
+     */
     protected $cache = [];
 
+    /**
+     * Easier structure of the structure.
+     * 
+     * @param \Nette\Database\Table\ActiveRow $Country 
+     * 
+     * @return self 
+     */
     public static function fromActiveRow(ActiveRow $Country)
     {
         return new self($Country);
     }
 
+    /**
+     * @param mixed $Country 
+     */
     private function __construct($Country)
     {
         $this->Country = $Country;
     }
 
+    /**
+     * Adds the basic data of the country to the cache.
+     * 
+     * @return self 
+     */
     public function addCountry(): self
     {
         $this->cache = array_merge($this->cache, [
@@ -30,6 +58,11 @@ class Country
         return $this;
     }
 
+    /**
+     * Country statistics are added to the cache.
+     * 
+     * @return self 
+     */
     public function addStats(): self
     {
         $data = [];
@@ -50,6 +83,11 @@ class Country
         return $this;
     }
 
+    /**
+     * Return to cache.
+     * 
+     * @return array 
+     */
     public function getData(): array
     {
         return $this->cache;

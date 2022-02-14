@@ -2,8 +2,6 @@
 
 namespace App\Console;
 
-use \App\Interface\Command;
-
 /** 
  * Kernel that runs commands on the app.
  * 
@@ -113,9 +111,9 @@ final class Kernel
     
             $Command = new $this->commands[$this->command]($this->arguments);
     
-            if (!$Command instanceof Command) {
+            /* if (!$Command instanceof Command) {
                 throw new \Exception('The command can only be of type Command!');
-            }
+            } */
     
             return sprintf("%s\r\n", $Command->run());
         } catch (\Exception $e) {

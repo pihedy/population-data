@@ -2,8 +2,6 @@
 
 namespace App;
 
-use \App\Interface\Provider;
-
 /** 
  * The App class from which everything starts.
  * 
@@ -80,14 +78,15 @@ final class Core
     {
         $Object = new $provider;
 
-        if (!$Object instanceof Provider) {
+        /* NOTE: Interface anomália! */
+        /* if (!$Object instanceof Provider) {
             throw new \Exception(
                 sprintf(
                     'The class (%s) you want to register is not of Provider type!', 
                     $provider
                 )
             );
-        }
+        } */
 
         $this->container[$Object->getKey()] = $Object->boot();
     }

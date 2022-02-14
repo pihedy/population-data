@@ -12,6 +12,11 @@
 set_time_limit(3600);
 
 /** 
+ * @var string App Temp Directory.
+ */
+define('APP_TMP_DIR', APP_ROOT_DIR . DIRECTORY_SEPARATOR . 'tmp');
+
+/** 
  * @var string App Base Directory.
  */
 define('APP_BASE_DIR', APP_SRC_DIR . DIRECTORY_SEPARATOR . 'app');
@@ -56,6 +61,18 @@ try {
     function Core(): \App\Core
     {
         return \App\Core::getInstance();
+    }
+
+    /** 
+     * Register a database provider for the app.
+     */
+    Core()->register(\App\Provider\DatabaseProvider::class);
+
+    /** 
+     * If the console part of the app is running, just don't start here.
+     */
+    if (defined('APP_CONSOLE')) {
+        return;
     }
 
     /** 

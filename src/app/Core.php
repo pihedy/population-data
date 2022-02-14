@@ -19,7 +19,7 @@ final class Core
     protected $container = [];
 
     /**
-     * A copy of the basis of the theme.
+     * A copy of the basis of the app.
      * 
      * @var null|self
      */
@@ -71,6 +71,11 @@ final class Core
         return self::$instance;
     }
 
+    /**
+     * Registration of a simple container system.
+     * 
+     * @param string $provider 
+     */
     public function register(string $provider): void
     {
         $Object = new $provider;
@@ -92,6 +97,6 @@ final class Core
      */
     public function run(): void
     {
-        /* TODO: ide kell valami provider szerű! */
+        /* TODO: ide kell valami route system szerű! */
     }
 }

@@ -1,16 +1,33 @@
 <?php declare(strict_types=1);
 
-namespace App;
-
 namespace App\Provider;
 
 use \App\Interface\Provider;
+use \Nette\Caching\Storages\FileStorage;
 use \Nette\Database\Connection;
+use \Nette\Database\Structure;
+use \Nette\Database\Conventions\DiscoveredConventions;
+use \Nette\Database\Explorer;
 
+/** 
+ * The database provider that maps the app to Nette's database.
+ * 
+ * @author Pihe Edmond <pihedy@gmail.com>
+ */
 class DatabaseProvider implements Provider
 {
+    /**
+     * Provider key.
+     * 
+     * @var string
+     */
     protected $key = 'database';
 
+    /**
+     * Provider settings.
+     * 
+     * @var array
+     */
     protected $settings = [];
 
     public function __construct()
@@ -28,15 +45,39 @@ class DatabaseProvider implements Provider
         ];
     }
 
+    /**
+     * It awakens the provider's dependencies and returns with them.
+     * 
+     * @return mixed
+     */
     public function boot()
     {
-        return new Connection(
+        /** 
+         * @var \Nette\Caching\IStorage $FileStorage
+         */
+        $FileStorage            = new FileStorage(APP_TMP_DIR);
+
+        $Connection             = new Connection(
             $this->settings['dsn'],
             $this->settings['user'],
             $this->settings['password']
         );
+        $Structure              = new Structure($Connection, $FileStorage);
+        $DiscoveredConventions  = new DiscoveredConventions($Structure);
+
+        return new Explorer(
+            $Connection, 
+            $Structure, 
+            $DiscoveredConventions, 
+            $FileStorage
+        );
     }
 
+    /**
+     * Returns the provider key.
+     * 
+     * @return string 
+     */
     public function getKey(): string
     {
         return $this->key;
